@@ -2,6 +2,7 @@
 #include "GameConstants.h"
 #include "Actor.h"
 #include <string>
+#include <cmath>
 using namespace std;
 
 GameWorld* createStudentWorld(string assetPath)
@@ -27,10 +28,12 @@ int StudentWorld::init()
    // int numActors = getNumActors();
     Socrates* socratesPtr = new Socrates(); //pointer to newly created socrates object
     
+    double pi = 3.14159265;
     for (int i = 0; i < max(180 - 20 * getLevel(), 20); i++) {
-        int x = randInt(VIEW_WIDTH / 2 - 120, VIEW_WIDTH / 2 + 120);
-        int y = randInt(VIEW_HEIGHT / 2 - 120, VIEW_HEIGHT / 2 + 120);
-        Dirt * dirtPtr = new Dirt(x, y);
+        int x = randInt(0, 360);
+        double deg = (x * 2 * pi)/360;
+        int y = randInt(0, 120);
+        Dirt * dirtPtr = new Dirt(y*cos(deg)+128, y*sin(deg)+128);
     }
     
    
