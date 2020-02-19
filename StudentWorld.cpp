@@ -30,10 +30,9 @@ int StudentWorld::init()
     
     double pi = 3.14159265;
     for (int i = 0; i < max(180 - 20 * getLevel(), 20); i++) {
-        int x = randInt(0, 360);
-        double deg = (x * 2 * pi)/360;
-        int y = randInt(0, 120);
-        Dirt * dirtPtr = new Dirt(y*cos(deg)+128, y*sin(deg)+128);
+        double deg = (randInt(0, 360) * 2 * pi)/360;
+        double rad = (12)* sqrt(randInt(0, 100));
+        Dirt * dirtPtr = new Dirt(rad*cos(deg)+128, rad*sin(deg)+128);
     }
     
    
