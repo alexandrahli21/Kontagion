@@ -2,26 +2,31 @@
 #define STUDENTWORLD_H_
 
 #include "GameWorld.h"
+#include "Actor.h"
+#include "GameConstants.h"
 #include <vector>
 #include <string>
+using namespace std;
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
+
+const double pi = 3.14159265;
 
 class StudentWorld : public GameWorld
 {
 public: //add member functions but not member variables or data members
     StudentWorld(std::string assetPath);
+    ~StudentWorld();
     virtual int init();
     virtual int move();
     virtual void cleanUp();
     //int getNumActors();
-    ~StudentWorld()
-    {
-      // cleanUp();
-    }
+   
 
 private: //add data members, member functions
-  /*  int m_level, m_lives, m_totalActors;*/
+    vector<Actor*> m_actors;
+    int m_totalActors, m_numBacteria, m_BacteriaDestroyed;
+    Socrates* m_socrates;
    
 };
 
