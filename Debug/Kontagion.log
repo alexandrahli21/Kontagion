@@ -1,2 +1,4 @@
 ﻿  Actor.cpp
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(30,33): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(36,40): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
   Kontagion.vcxproj -> C:\CS32\Kontagion-skeleton-windows\Kontagion\Debug\Kontagion.exe

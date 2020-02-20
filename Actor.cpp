@@ -27,11 +27,13 @@ void Socrates::doSomething() {
 			leftX = (128 * (cos(theta + (pi / 36)))+128);
 			leftY = (128 * (sin(theta  + (pi / 36)))+128);
 			moveTo(leftX, leftY);
+			setDirection(theta*360/(2*pi)+180);
 			break;
 		case KEY_PRESS_RIGHT:
 			rightX = (128 * (cos(theta - (pi / 36)))+128);
 			rightY = (128 * (sin(theta - (pi / 36)))+128);
 			moveTo(rightX, rightY);
+			setDirection(theta * 360 / (2 * pi) + 180);
 			break;
 		}
 	}
