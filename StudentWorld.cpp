@@ -47,8 +47,10 @@ int StudentWorld::move()
     m_socrates->doSomething();
 
     //for each actor, do something 
-    for (int i = 0; i < m_totalActors; i++) {
-       
+    vector<Actor*>::iterator it; 
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        (*it)->doSomething();
     }
     
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
@@ -62,5 +64,16 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
-    //delete* socrates;
+    vector<Actor*>::iterator it; 
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        delete* it; 
+        m_actors.erase(it);
+        it = m_actors.begin(); //revalidate pointer
+    }
+    if (m_socrates != nullptr) {
+        delete m_socrates;
+        m_socrates = nullptr;
+    }
+    m_totalActors = 0;
 }

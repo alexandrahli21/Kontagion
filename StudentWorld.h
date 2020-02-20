@@ -25,7 +25,7 @@ public: //add member functions but not member variables or data members
 
 private: //add data members, member functions
     vector<Actor*> m_actors;
-    int m_totalActors, m_numBacteria, m_BacteriaDestroyed;
+    int m_totalActors;
     Socrates* m_socrates;
    
 };
