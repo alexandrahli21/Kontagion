@@ -66,7 +66,7 @@ int StudentWorld::init()
     m_socrates = new Socrates(this); //pointer to newly created socrates object
    // vector<Actor*> m_actors(m_totalActors); //keep track of all actors except Socrates
 
-    //addActor(new Dirt(0, 0, this));
+   
     //allocate and insert dirt into game world
     
     for (int i = 0; i < max(180 - 20 * getLevel(), 20); i++) {
@@ -80,6 +80,7 @@ int StudentWorld::init()
         }
         */
     }
+ 
     
     //allocate and insert pit(s) into game world
     for (int i = 0; i < getLevel(); i++) {
@@ -88,6 +89,7 @@ int StudentWorld::init()
 
         addActor(new Pit(rad * cos(deg) + 128, rad * sin(deg) + 128, this));
     }
+    
     //in a manner such that no two pits
    // overlap with each other(their centers must be more than SPRITE_WIDTH
       //  pixels apart from each other).
