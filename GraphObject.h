@@ -7,6 +7,7 @@
 #include <set>
 #include <cmath>
 
+
 const int ANIMATION_POSITIONS_PER_TICK = 1;
 
 using Direction = int;

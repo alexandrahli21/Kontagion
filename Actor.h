@@ -2,6 +2,7 @@
 #define ACTOR_H_
 
 #include <set>
+#include <string>
 #include <cmath>
 #include <valarray>
 #include "GraphObject.h"
@@ -14,7 +15,7 @@ class Actor : public GraphObject
 {
 public:
 	Actor(int imageID, double startX, double startY, Direction dir, int depth, double size, StudentWorld* world, bool damageable);
-	
+	int getType() const;
 	//virtual int init();
 	//virtual int move();
 	virtual void doSomething() = 0;
@@ -24,16 +25,9 @@ private:
 	StudentWorld* m_world;
 	bool m_dead;
 	bool m_damageable;
+	int m_type;
 };
 
-
-class Socrates : public Actor 
-{
-public:
-	Socrates(StudentWorld* world);
-	virtual void doSomething();
-private:
-};
 
 class Dirt : public Actor 
 {
@@ -43,6 +37,31 @@ public:
 	virtual void doSomething(); 
 private:
 	
+};
+
+class Pit : public Actor
+{
+public:
+	Pit(double startX, double startY, StudentWorld* world);
+	virtual void doSomething();
+private:
+};
+
+class Agent : public Actor
+{
+public:
+	Agent(int imageID, double startX, double startY, Direction dir, int depth, double size, StudentWorld* world, bool damageable);
+	virtual void doSomething();
+private:
+};
+	
+
+class Socrates : public Agent
+{
+public:
+	Socrates(StudentWorld* world);
+	virtual void doSomething();
+private:
 };
 
 #endif // ACTOR_H_
