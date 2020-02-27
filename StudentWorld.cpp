@@ -50,20 +50,11 @@ void StudentWorld::addActor(Actor* actor)
     m_totalActors++;
 }
 
-void StudentWorld::deleteEndActor() 
-{
-    list<Actor*>::iterator it;
-    it = m_actors.end();
-    it--;
-    delete* it;
-    m_actors.erase(it);
-    m_totalActors--;
-}
 
 int StudentWorld::init()
 {
     //allocate and insert a socrates object into game world 
-    m_socrates = new Socrates(this); //pointer to newly created socrates object
+    m_socrates = new Socrates(0, (VIEW_HEIGHT / 2), this); //pointer to newly created socrates object
    // vector<Actor*> m_actors(m_totalActors); //keep track of all actors except Socrates
 
    
@@ -73,12 +64,15 @@ int StudentWorld::init()
         double deg = (randInt(0, 360) * 2 * pi) / 360;
         double rad = (12) * sqrt(randInt(0, 100));
         addActor(new Dirt((rad * cos(deg) + 128), (rad * sin(deg) + 128), this));
-       /*
-        if (overlap(IID_DIRT, rad * cos(deg) + 128, rad * sin(deg) + 128)) {
-            deleteEndActor();
+       
+        /*
+        if (overlap(IID_DIRT, (rad * cos(deg)) + 128, (rad * sin(deg) + 128))) {
+            m_actors.pop_back();
             i--;
         }
         */
+        
+        
     }
  
     

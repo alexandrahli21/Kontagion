@@ -20,7 +20,7 @@ public: //add member functions but not member variables or data members
     double distance(double x1, double y1, double x2, double y2);
     bool overlap(int imageID, double randX, double randY);
     void addActor(Actor* actor);
-    void deleteEndActor();
+   
     virtual int init();
     virtual int move();
     virtual void cleanUp();
