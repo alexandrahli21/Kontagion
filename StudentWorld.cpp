@@ -1,5 +1,6 @@
 #include "StudentWorld.h"
-
+#include "GameConstants.h"
+#include "Actor.h"
 #include <string>
 #include <cmath>
 #include <math.h>
@@ -27,22 +28,29 @@ double StudentWorld::distance(double x1, double y1, double x2, double y2)
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-//return true if overlaps with another actor
-bool StudentWorld::overlap(Actor* actor, double randX, double randY)
+
+void StudentWorld::generateNonoverlapCoord(double &newX, double &newY)
 {
-    list<Actor*>::iterator it;
-    it = m_actors.begin();
-    while (it != m_actors.end()) {
-        if ((*it) == actor)
-        {
-            if (distance((*it)->getX(), (*it)->getY(), randX, randY) < SPRITE_WIDTH) {
-                return true;
+    bool contLoop = true;
+    while (contLoop) {
+        double deg = (randInt(0, 360) * 2.0 * pi) / 360.0;
+        double rad = (12.0) * sqrt(randInt(0, 100));
+        newX = (rad * cos(deg) + 128.0);
+        newY = (rad * sin(deg) + 128.0);
+        list<Actor*>::iterator it;
+        it = m_actors.begin();
+        while (it != m_actors.end()) {
+            double xCoord = (*it)->getX();
+            double yCoord = (*it)->getY();
+            if (distance(xCoord, yCoord, newX, newY) < SPRITE_WIDTH) {
+                continue;
             }
+            it++;
         }
-        it++;
+        contLoop = false;
     }
-    return false;
 }
+
 
 void StudentWorld::addActor(Actor* actor)
 {
@@ -57,37 +65,26 @@ int StudentWorld::init()
     m_socrates = new Socrates(0, (VIEW_HEIGHT / 2), this); //pointer to newly created socrates object
    // vector<Actor*> m_actors(m_totalActors); //keep track of all actors except Socrates
 
-   
     //allocate and insert dirt into game world
-    
     for (int i = 0; i < max(180 - 20 * getLevel(), 20); i++) {
-        double deg = (randInt(0, 360) * 2 * pi) / 360;
-        double rad = (12) * sqrt(randInt(0, 100));
-        Dirt* dirtPtr = new Dirt((rad * cos(deg) + 128), (rad * sin(deg) + 128), this);
-        addActor(dirtPtr);
-        
-        /*
-        if (overlap(dirtPtr, (rad * cos(deg)) + 128, (rad * sin(deg) + 128))) {
-            m_actors.pop_back();
-            i--;
-        }
-        */
-        
+        double deg = (randInt(0, 360) * 2.0 * pi) / 360.0;
+        double rad = (12.0) * sqrt(randInt(0, 100));
+        addActor(new Dirt((rad * cos(deg) + 128.0), (rad * sin(deg) + 128.0), this));
     }
- 
     
     //allocate and insert pit(s) into game world
     for (int i = 0; i < getLevel(); i++) {
-        double deg = ((2 * randInt(0, 360) * pi) / 360);
-        double rad = (12) * sqrt(randInt(0, 100));
-
-        addActor(new Pit(rad * cos(deg) + 128, rad * sin(deg) + 128, this));
+        double x, y;
+        generateNonoverlapCoord(x, y);
+        addActor(new Pit(x, y, this)); 
     }
-    
-    //in a manner such that no two pits
-   // overlap with each other(their centers must be more than SPRITE_WIDTH
-      //  pixels apart from each other).
 
+    //allocate and insert food into game world
+    for (int i = 0; i < min(5 * getLevel(), 25); i++) {
+       double q, r;
+       generateNonoverlapCoord(q, r);
+       addActor(new Food(q, r, this));
+    }
     
    //initialize data structures used to keep track of game's world
 

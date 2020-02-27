@@ -14,8 +14,7 @@ class StudentWorld;
 class Actor : public GraphObject 
 {
 public:
-	Actor(int imageID, double startX, double startY, Direction dir, StudentWorld* world);
-	int getType() const;
+	Actor(int imageID, double startX, double startY, Direction dir, int depth, StudentWorld* world);
 	bool isDead() const;
 	void setDead(); 
 	virtual bool takeDamage(int damage);
@@ -38,7 +37,13 @@ public:
 	virtual bool takeDamage(int);
 	virtual bool blocksBacteriumMovement() const;
 };
-
+class Food : public Actor
+{
+public:
+	Food(double startX, double startY, StudentWorld* world);
+	virtual void doSomething();
+	virtual bool isEdible() const;
+};
 class Pit : public Actor
 {
 public:
@@ -50,7 +55,7 @@ public:
 class Agent : public Actor
 {
 public:
-	Agent(int imageID, double startX, double startY, Direction dir, StudentWorld* world, int hitPoints);
+	Agent(int imageID, double startX, double startY, Direction dir, int depth, StudentWorld* world, int hitPoints);
 	virtual bool takeDamage(int damage);
 	int numHitPoints() const;
 	void restoreHealth(); 
@@ -69,6 +74,23 @@ public:
 	void addFlames(); 
 	int numFlames() const; 
 	int numSprays() const;
+};
+
+class Bacterium : public Agent
+{
+public:
+	Bacterium(int imageID, double startX, double startY, StudentWorld* world, int hitPoints);
+	virtual bool takeDamage(int damage);
+	virtual bool preventsLevelCompleting() const;
+};
+
+class EColi : public Bacterium
+{
+public:
+	EColi(double startX, double startY, StudentWorld* world);
+	virtual void doSomething();
+	virtual int soundWhenHurt() const;
+	virtual int soundWhenDie() const;
 };
 
 #endif // ACTOR_H_
