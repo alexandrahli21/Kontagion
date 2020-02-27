@@ -28,12 +28,12 @@ double StudentWorld::distance(double x1, double y1, double x2, double y2)
 }
 
 //return true if overlaps with another actor
-bool StudentWorld::overlap(int imageID, double randX, double randY)
+bool StudentWorld::overlap(Actor* actor, double randX, double randY)
 {
     list<Actor*>::iterator it;
     it = m_actors.begin();
     while (it != m_actors.end()) {
-        if ((*it)->getType() == imageID)
+        if ((*it) == actor)
         {
             if (distance((*it)->getX(), (*it)->getY(), randX, randY) < SPRITE_WIDTH) {
                 return true;
@@ -63,15 +63,15 @@ int StudentWorld::init()
     for (int i = 0; i < max(180 - 20 * getLevel(), 20); i++) {
         double deg = (randInt(0, 360) * 2 * pi) / 360;
         double rad = (12) * sqrt(randInt(0, 100));
-        addActor(new Dirt((rad * cos(deg) + 128), (rad * sin(deg) + 128), this));
-       
+        Dirt* dirtPtr = new Dirt((rad * cos(deg) + 128), (rad * sin(deg) + 128), this);
+        addActor(dirtPtr);
+        
         /*
-        if (overlap(IID_DIRT, (rad * cos(deg)) + 128, (rad * sin(deg) + 128))) {
+        if (overlap(dirtPtr, (rad * cos(deg)) + 128, (rad * sin(deg) + 128))) {
             m_actors.pop_back();
             i--;
         }
         */
-        
         
     }
  

@@ -18,7 +18,7 @@ public: //add member functions but not member variables or data members
     StudentWorld(std::string assetPath);
     ~StudentWorld();
     double distance(double x1, double y1, double x2, double y2);
-    bool overlap(int imageID, double randX, double randY);
+    bool overlap(Actor* actor, double randX, double randY);
     void addActor(Actor* actor);
    
     virtual int init();
