@@ -159,32 +159,57 @@ int Socrates::numFlames() const
 
 // How many spray charges does the object have?
 int Socrates::numSprays() const {
-	return 0; //dummy
+	return 20; //dummy
 }
+//
+//Bacterium::Bacterium(int imageID, double startX, double startY, StudentWorld* world, int hitPoints)
+//	:Agent(imageID, startX, startY, 0, up, world, hitPoints) {}
+//
+//bool Bacterium::takeDamage(int damage) {
+//	return true; //dummy code
+//}
+//
+//bool Bacterium::preventsLevelCompleting() const {
+//	return false; //dummy code
+//}
 
-Bacterium::Bacterium(int imageID, double startX, double startY, StudentWorld* world, int hitPoints)
-	:Agent(imageID, startX, startY, 0, up, world, hitPoints) {}
-
-bool Bacterium::takeDamage(int damage) {
-	return true; //dummy code
-}
-
-bool Bacterium::preventsLevelCompleting() const {
-	return false; //dummy code
-}
-
-EColi::EColi(double startX, double startY, StudentWorld* world)
-	:Bacterium(IID_ECOLI, startX, startY, world, 5) {}
-
-
-void EColi::doSomething() {
-	//
-}
-
-int EColi::soundWhenHurt() const {
-	return SOUND_ECOLI_HURT;
-}
-
-int EColi::soundWhenDie() const {
-	return SOUND_ECOLI_DIE;
-}
+//EColi::EColi(double startX, double startY, StudentWorld* world)
+//	:Bacterium(IID_ECOLI, startX, startY, world, 5) {}
+//
+//
+//void EColi::doSomething() {
+//	//
+//}
+//
+//int EColi::soundWhenHurt() const {
+//	return SOUND_ECOLI_HURT;
+//}
+//
+//int EColi::soundWhenDie() const {
+//	return SOUND_ECOLI_DIE;
+//}
+//
+//Salmonella::Salmonella(double startX, double startY, StudentWorld* world, int hitPoints)
+//	 :Bacterium(IID_SALMONELLA, startX, startY, world, hitPoints) {}
+//
+//int Salmonella::soundWhenHurt() const {
+//	return SOUND_SALMONELLA_HURT;
+//}
+//
+//int Salmonella::soundWhenDie() const {
+//	return SOUND_SALMONELLA_DIE;
+//}
+//
+//RegularSalmonella::RegularSalmonella(double startX, double startY, StudentWorld* world)
+//	:Salmonella(startX, startY, world, 4) {}
+//
+//void RegularSalmonella::doSomething() {
+//	//
+//}
+//
+//AggressiveSalmonella::AggressiveSalmonella(double startX, double startY, StudentWorld* world)
+//	:Salmonella(startX, startY, world, 10) {}
+//
+//void AggressiveSalmonella::doSomething() {
+//	//
+//}
