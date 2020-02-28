@@ -202,7 +202,6 @@ void StudentWorld::getPositionOnCircumference(int angle, double& x, double& y) c
 
 int StudentWorld::init()
 {
-   
     //allocate and insert a socrates object into game world 
     m_socrates = new Socrates(0, (VIEW_HEIGHT / 2), this); //pointer to newly created socrates object
    // vector<Actor*> m_actors(m_totalActors); //keep track of all actors except Socrates

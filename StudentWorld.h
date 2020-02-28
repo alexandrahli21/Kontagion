@@ -34,10 +34,6 @@ public: //add member functions but not member variables or data members
     Actor* getOverlappingEdible(Actor* a) const;
     bool getAngleToNearbySocrates(Actor* a, int dist, int& angle) const;
     bool getAngleToNearestNearbyEdible(Actor* a, int dist, int& angle) const;
-    
-    // Set x and y to the position on the circumference of the Petri dish
-    // at the indicated angle from the center.  (The circumference is
-    // where socrates and goodies are placed.)
     void getPositionOnCircumference(int angle, double& x, double& y) const;
 private: //add data members, member functions
     std::list<Actor*> m_actors;

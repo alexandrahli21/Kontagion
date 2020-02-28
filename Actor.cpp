@@ -226,13 +226,63 @@ int Salmonella::soundWhenDie() const {
 }
 
 RegularSalmonella::RegularSalmonella(double startX, double startY, StudentWorld* world)
-	:Salmonella(startX, startY, world, 4), m_foodEaten(0) {}
+	:Salmonella(startX, startY, world, 4), m_foodEaten(0), m_movementPlan(0) {}
 
 void RegularSalmonella::doSomething() {
-	if (numHitPoints() <= 0) {
+	if (isDead()) {
 		return;
 	}
-	
+
+	if (getWorld()->getOverlappingSocrates(this) != nullptr) {
+		getWorld()->damageOneActor(getWorld()->getOverlappingSocrates(this), 1);
+	}
+	else if (m_foodEaten == 3) {
+		double newX = getX();
+		double newY = getY(); 
+		if (newX < VIEW_WIDTH / 2) {
+			newX = newX + SPRITE_WIDTH; 
+		}
+		else if (newX > VIEW_WIDTH / 2) {
+			newX = newX - SPRITE_WIDTH;
+		}
+		if (newY < VIEW_WIDTH / 2) {
+			newY = newY + SPRITE_WIDTH;
+		}
+		else if (newY > VIEW_WIDTH / 2) {
+			newY = newY - SPRITE_WIDTH;
+		}
+		getWorld()->addActor(new RegularSalmonella(newX, newY, getWorld()));
+		m_foodEaten = 0;
+	}
+	else if (getWorld()->getOverlappingEdible(this) != nullptr) {
+		m_foodEaten++;
+		getWorld()->getOverlappingEdible(this)->setDead();
+	}
+
+	if (m_movementPlan > 0) {
+		m_movementPlan--;
+		double x, y;
+		getPositionInThisDirection(getDirection(), 3, x, y);
+		if ((!getWorld()->isBacteriumMovementBlockedAt(this, x, y)) && (getWorld()->distance(VIEW_WIDTH / 2.0, VIEW_HEIGHT / 2.0, x, y) <VIEW_RADIUS)) 
+		{
+			moveTo(x, y);
+		}
+		else {
+			setDirection(randInt(0, 359));
+			m_movementPlan = 10;
+		}
+	}
+	else {
+		int angle;
+		if (getWorld()->getAngleToNearestNearbyEdible(this, 128, angle)) {
+
+		}
+		else {
+			setDirection(randInt(0, 359));
+			m_movementPlan = 10;
+			return;
+		}
+	}
 
 
 }

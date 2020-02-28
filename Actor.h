@@ -114,7 +114,7 @@ public:
 	RegularSalmonella(double startX, double startY, StudentWorld* world);
 	virtual void doSomething();
 private:
-	int m_foodEaten;
+	int m_foodEaten, m_movementPlan;
 };
 
 class AggressiveSalmonella : public Salmonella
