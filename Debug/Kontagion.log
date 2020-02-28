@@ -1,7 +1,7 @@
 ﻿  Actor.cpp
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(73,29): warning C4804: '<=': unsafe use of type 'bool' in operation
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(78,44): warning C4804: '<=': unsafe use of type 'bool' in operation
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(82,45): warning C4804: '<=': unsafe use of type 'bool' in operation
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(142,33): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(148,40): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(76,29): warning C4804: '<=': unsafe use of type 'bool' in operation
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(81,44): warning C4804: '<=': unsafe use of type 'bool' in operation
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(86,45): warning C4804: '<=': unsafe use of type 'bool' in operation
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(147,33): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
+C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(153,40): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
   Kontagion.vcxproj -> C:\CS32\Kontagion-skeleton-windows\Kontagion\Debug\Kontagion.exe

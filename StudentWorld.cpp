@@ -63,6 +63,11 @@ void StudentWorld::addActor(Actor* actor)
     m_totalActors++;
 }
 
+void StudentWorld::whereSocrates(double& x, double& y)
+{
+    x = m_socrates->getX();
+    y = m_socrates->getY();
+}
 
 int StudentWorld::init()
 {

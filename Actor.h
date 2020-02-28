@@ -2,6 +2,7 @@
 #define ACTOR_H_
 
 #include <set>
+#include <list>
 #include <string>
 #include <cmath>
 #include <valarray>
@@ -26,6 +27,7 @@ public:
 private:
 	StudentWorld* m_world;
 	int m_type;
+	bool m_dead, m_solid;
 };
 
 
@@ -63,6 +65,8 @@ public:
 	void restoreHealth(); 
 	virtual int soundWhenHurt() const = 0; 
 	virtual int soundWhenDie() const = 0; 
+private: 
+	int m_numHP;
 };
 	
 
@@ -108,6 +112,8 @@ class RegularSalmonella : public Salmonella
 public:
 	RegularSalmonella(double startX, double startY, StudentWorld* world);
 	virtual void doSomething();
+private:
+	int m_foodEaten;
 };
 
 class AggressiveSalmonella : public Salmonella

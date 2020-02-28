@@ -5,17 +5,17 @@
 
 
 Actor::Actor(int imageID, double startX, double startY, Direction dir, int depth, StudentWorld* world)
-	: GraphObject(imageID, startX, startY, dir, depth), m_world(world),  m_type(imageID) {}
+	: GraphObject(imageID, startX, startY, dir, depth), m_world(world),  m_type(imageID), m_dead(false), m_solid(false) {}
 
 
 bool Actor::isDead() const
 {
-	return false; //dummy code for rn
+	return m_dead; 
 }
 
 void Actor::setDead()
 {
-	
+	m_dead = true;
 }
 
 bool Actor::takeDamage(int damage) 
@@ -25,7 +25,7 @@ bool Actor::takeDamage(int damage)
 
 bool Actor::blocksBacteriumMovement() const
 {
-	return true; //dummy code
+	return m_solid; 
 }
 
 bool Actor::isEdible() const
@@ -66,6 +66,9 @@ Pit::Pit(double startX, double startY, StudentWorld* world)
 
 void Pit::doSomething()
 {
+	if (m_numRS + m_numAS + m_numEColi <= 0) {
+		setDead();
+	}
 
 	if (randInt(1, 50) == 2) {
 		int totalBac = m_numRS + m_numAS + m_numEColi;
@@ -73,15 +76,17 @@ void Pit::doSomething()
 		if (1 <= chance <= m_numRS) {
 			getWorld()->addActor(new RegularSalmonella(getX(), getY(), getWorld()));
 			m_numRS--;
-			//sound born
+			getWorld()->playSound(SOUND_BACTERIUM_BORN);
 		}
 		if (m_numRS < chance <= m_numRS + m_numAS) {
 			getWorld()->addActor(new AggressiveSalmonella(getX(), getY(), getWorld()));
 			m_numAS--;
+			getWorld()->playSound(SOUND_BACTERIUM_BORN);
 		}
 		if (m_numRS + m_numAS < chance <= totalBac) {
 			getWorld()->addActor(new EColi(getX(), getY(), getWorld()));
 			m_numEColi--;
+			getWorld()->playSound(SOUND_BACTERIUM_BORN);
 		}
 	}
 }
@@ -106,7 +111,7 @@ bool Food::isEdible() const {
 
 
 Agent::Agent(int imageID, double startX, double startY, Direction dir, int depth, StudentWorld* world, int hitPoints)
-	:Actor(imageID, startX, startY, dir, depth, world)  {}
+	:Actor(imageID, startX, startY, dir, depth, world), m_numHP(hitPoints) {}
 
 bool Agent::takeDamage(int damage)
 {
@@ -115,7 +120,7 @@ bool Agent::takeDamage(int damage)
 
 int Agent::numHitPoints() const
 {
-	return 0; //dummy code
+	return m_numHP;
 }
 
 void Agent::restoreHealth()
@@ -127,8 +132,8 @@ Socrates::Socrates(double startX, double startY, StudentWorld* world)
 	:Agent(IID_PLAYER, startX, startY, 0, 0, world, 100) {}
 
 void Socrates::doSomething() {
-	/*if (numHitPoints() <= 0)
-		return; */
+	if (numHitPoints() <= 0)
+		return; 
 
 	int key;
 	double leftX, leftY, rightX, rightY, theta;
@@ -219,10 +224,24 @@ int Salmonella::soundWhenDie() const {
 }
 
 RegularSalmonella::RegularSalmonella(double startX, double startY, StudentWorld* world)
-	:Salmonella(startX, startY, world, 4) {}
+	:Salmonella(startX, startY, world, 4), m_foodEaten(0) {}
 
 void RegularSalmonella::doSomething() {
-	//
+	if (numHitPoints() <= 0) {
+		return;
+	}
+	double x, y; 
+	getWorld()->whereSocrates(x, y);
+	//if overlap w socrates
+	/*if (getWorld()->distance(getX(), getY(), x, y) <  {
+
+	}*/
+
+	//if overlaps w food 
+	/*list<Actor*>::iterator it;
+	it*/
+
+
 }
 
 AggressiveSalmonella::AggressiveSalmonella(double startX, double startY, StudentWorld* world)
