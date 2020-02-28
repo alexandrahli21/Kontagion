@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 #include <math.h>
+#include <iostream>
 using namespace std;
 
 
@@ -15,8 +16,7 @@ GameWorld* createStudentWorld(string assetPath)
 // Students:  Add code to this file, StudentWorld.h, Actor.h and Actor.cpp
 
 StudentWorld::StudentWorld(string assetPath)
-    : GameWorld(assetPath), m_totalActors(0)
-{}
+    : GameWorld(assetPath), m_totalActors(0) {}
 
 StudentWorld::~StudentWorld() {
     cleanUp();
@@ -39,15 +39,20 @@ void StudentWorld::generateNonoverlapCoord(double &newX, double &newY)
         newY = (rad * sin(deg) + 128.0);
         list<Actor*>::iterator it;
         it = m_actors.begin();
+
+        bool finished = true; 
         while (it != m_actors.end()) {
             double xCoord = (*it)->getX();
             double yCoord = (*it)->getY();
             if (distance(xCoord, yCoord, newX, newY) < SPRITE_WIDTH) {
-                continue;
+                finished = false;
+                break;
             }
             it++;
         }
-        contLoop = false;
+        if (finished) {
+            contLoop = false;
+        }
     }
 }
 
@@ -61,6 +66,7 @@ void StudentWorld::addActor(Actor* actor)
 
 int StudentWorld::init()
 {
+   
     //allocate and insert a socrates object into game world 
     m_socrates = new Socrates(0, (VIEW_HEIGHT / 2), this); //pointer to newly created socrates object
    // vector<Actor*> m_actors(m_totalActors); //keep track of all actors except Socrates
@@ -71,7 +77,8 @@ int StudentWorld::init()
         double rad = (12.0) * sqrt(randInt(0, 100));
         addActor(new Dirt((rad * cos(deg) + 128.0), (rad * sin(deg) + 128.0), this));
     }
-    
+    cout << "hello" << endl;
+
     //allocate and insert pit(s) into game world
     for (int i = 0; i < getLevel(); i++) {
         double x, y;

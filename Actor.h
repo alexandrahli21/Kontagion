@@ -50,6 +50,8 @@ public:
 	Pit(double startX, double startY, StudentWorld* world);
 	virtual void doSomething();
 	virtual bool preventsLevelCompleting() const;
+private: 
+	int m_numRS, m_numAS, m_numEColi;
 };
 
 class Agent : public Actor
@@ -91,6 +93,28 @@ public:
 	virtual void doSomething();
 	virtual int soundWhenHurt() const;
 	virtual int soundWhenDie() const;
+};
+
+class Salmonella : public Bacterium
+{
+public:
+	Salmonella(double startX, double startY, StudentWorld* world, int hitPoints);
+	virtual int soundWhenHurt() const;
+	virtual int soundWhenDie() const;
+};
+
+class RegularSalmonella : public Salmonella
+{
+public:
+	RegularSalmonella(double startX, double startY, StudentWorld* world);
+	virtual void doSomething();
+};
+
+class AggressiveSalmonella : public Salmonella
+{
+public:
+	AggressiveSalmonella(double startX, double startY, StudentWorld* world);
+	virtual void doSomething();
 };
 
 #endif // ACTOR_H_

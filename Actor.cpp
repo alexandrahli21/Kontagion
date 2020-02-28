@@ -62,10 +62,13 @@ bool Dirt::blocksBacteriumMovement() const {
 
 
 Pit::Pit(double startX, double startY, StudentWorld* world)
-	:Actor(IID_PIT, startX, startY, 0, 1, world) {}
+	:Actor(IID_PIT, startX, startY, 0, 1, world), m_numRS(5), m_numAS(3), m_numEColi(2) {}
 
 void Pit::doSomething()
 {
+	if (randInt(1, 50) == 2) {
+
+	}
 }
 
 bool Pit::preventsLevelCompleting() const
@@ -109,8 +112,8 @@ Socrates::Socrates(double startX, double startY, StudentWorld* world)
 	:Agent(IID_PLAYER, startX, startY, 0, 0, world, 100) {}
 
 void Socrates::doSomething() {
-	//if (numHitPoints() <= 0)
-	//	return; 
+	/*if (numHitPoints() <= 0)
+		return; */
 
 	int key;
 	double leftX, leftY, rightX, rightY, theta;
@@ -187,4 +190,29 @@ int EColi::soundWhenHurt() const {
 
 int EColi::soundWhenDie() const {
 	return SOUND_ECOLI_DIE;
+}
+
+Salmonella::Salmonella(double startX, double startY, StudentWorld* world, int hitPoints)
+	 :Bacterium(IID_SALMONELLA, startX, startY, world, hitPoints) {}
+
+int Salmonella::soundWhenHurt() const {
+	return SOUND_SALMONELLA_HURT;
+}
+
+int Salmonella::soundWhenDie() const {
+	return SOUND_SALMONELLA_DIE;
+}
+
+RegularSalmonella::RegularSalmonella(double startX, double startY, StudentWorld* world)
+	:Salmonella(startX, startY, world, 4) {}
+
+void RegularSalmonella::doSomething() {
+	//
+}
+
+AggressiveSalmonella::AggressiveSalmonella(double startX, double startY, StudentWorld* world)
+	:Salmonella(startX, startY, world, 10) {}
+
+void AggressiveSalmonella::doSomething() {
+	//
 }
