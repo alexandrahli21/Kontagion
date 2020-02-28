@@ -66,8 +66,23 @@ Pit::Pit(double startX, double startY, StudentWorld* world)
 
 void Pit::doSomething()
 {
-	if (randInt(1, 50) == 2) {
 
+	if (randInt(1, 50) == 2) {
+		int totalBac = m_numRS + m_numAS + m_numEColi;
+		int chance = randInt(1, totalBac); 
+		if (1 <= chance <= m_numRS) {
+			getWorld()->addActor(new RegularSalmonella(getX(), getY(), getWorld()));
+			m_numRS--;
+			//sound born
+		}
+		if (m_numRS < chance <= m_numRS + m_numAS) {
+			getWorld()->addActor(new AggressiveSalmonella(getX(), getY(), getWorld()));
+			m_numAS--;
+		}
+		if (m_numRS + m_numAS < chance <= totalBac) {
+			getWorld()->addActor(new EColi(getX(), getY(), getWorld()));
+			m_numEColi--;
+		}
 	}
 }
 
