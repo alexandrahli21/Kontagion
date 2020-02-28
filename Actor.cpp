@@ -275,7 +275,16 @@ void RegularSalmonella::doSomething() {
 	else {
 		int angle;
 		if (getWorld()->getAngleToNearestNearbyEdible(this, 128, angle)) {
-
+			double x, y;
+			getPositionInThisDirection(getDirection(), 3, x, y);
+			if ((getWorld()->isBacteriumMovementBlockedAt(this, x, y))) {
+				setDirection(randInt(0, 359));
+				m_movementPlan = 10;
+				return;
+			}
+			else {
+				moveForward(m_movementPlan);
+			}
 		}
 		else {
 			setDirection(randInt(0, 359));

@@ -4,8 +4,4 @@ C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(82,44): warning
 C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(87,45): warning C4804: '<=': unsafe use of type 'bool' in operation
 C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(149,33): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
 C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\Actor.cpp(155,40): warning C4244: 'argument': conversion from 'double' to 'Direction', possible loss of data
-  StudentWorld.cpp
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\StudentWorld.cpp(148,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\CS32\Kontagion-skeleton-windows\Kontagion\Kontagion\StudentWorld.cpp(189,22): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
   Kontagion.vcxproj -> C:\CS32\Kontagion-skeleton-windows\Kontagion\Debug\Kontagion.exe
