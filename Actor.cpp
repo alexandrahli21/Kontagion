@@ -1,11 +1,12 @@
 #include "Actor.h"
 #include "StudentWorld.h"
-#include "GameConstants.h"
 #include <iostream>
+using namespace std;
 
 
 Actor::Actor(int imageID, double startX, double startY, Direction dir, int depth, StudentWorld* world)
-	: GraphObject(imageID, startX, startY, dir, depth), m_world(world),  m_type(imageID), m_dead(false), m_solid(false) {}
+	: GraphObject(imageID, startX, startY, dir, depth), 
+		m_world(world),  m_type(imageID), m_dead(false) {}
 
 
 bool Actor::isDead() const
@@ -25,12 +26,12 @@ bool Actor::takeDamage(int damage)
 
 bool Actor::blocksBacteriumMovement() const
 {
-	return m_solid; 
+	return false; 
 }
 
 bool Actor::isEdible() const
 {
-	return false; //dummy code
+	return false; 
 }
 
 bool Actor::preventsLevelCompleting() const
@@ -115,7 +116,8 @@ Agent::Agent(int imageID, double startX, double startY, Direction dir, int depth
 
 bool Agent::takeDamage(int damage)
 {
-	return false; //dummy code
+	m_numHP = m_numHP - damage; 
+	return true;
 }
 
 int Agent::numHitPoints() const
@@ -230,16 +232,7 @@ void RegularSalmonella::doSomething() {
 	if (numHitPoints() <= 0) {
 		return;
 	}
-	double x, y; 
-	getWorld()->whereSocrates(x, y);
-	//if overlap w socrates
-	/*if (getWorld()->distance(getX(), getY(), x, y) <  {
-
-	}*/
-
-	//if overlaps w food 
-	/*list<Actor*>::iterator it;
-	it*/
+	
 
 
 }

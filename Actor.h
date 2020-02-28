@@ -8,6 +8,7 @@
 #include <valarray>
 #include "GraphObject.h"
 #include "GameWorld.h"
+#include "GameConstants.h"
 
 class StudentWorld;
 
@@ -27,7 +28,7 @@ public:
 private:
 	StudentWorld* m_world;
 	int m_type;
-	bool m_dead, m_solid;
+	bool m_dead;
 };
 
 

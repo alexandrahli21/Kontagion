@@ -23,7 +23,7 @@ StudentWorld::~StudentWorld() {
 }
 
 
-double StudentWorld::distance(double x1, double y1, double x2, double y2)
+double StudentWorld::distance(double x1, double y1, double x2, double y2) const
 {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
@@ -44,7 +44,7 @@ void StudentWorld::generateNonoverlapCoord(double &newX, double &newY)
         while (it != m_actors.end()) {
             double xCoord = (*it)->getX();
             double yCoord = (*it)->getY();
-            if (distance(xCoord, yCoord, newX, newY) < SPRITE_WIDTH) {
+            if (distance(xCoord, yCoord, newX, newY) <= SPRITE_WIDTH) {
                 finished = false;
                 break;
             }
@@ -63,10 +63,141 @@ void StudentWorld::addActor(Actor* actor)
     m_totalActors++;
 }
 
-void StudentWorld::whereSocrates(double& x, double& y)
+
+// If actor a ovelaps some live actor, damage that live actor by the
+    // indicated amount of damage and return true; otherwise, return false.
+bool StudentWorld::damageOneActor(Actor* a, int damage) 
 {
-    x = m_socrates->getX();
-    y = m_socrates->getY();
+    double x = a->getX();
+    double y = a->getY();
+    list<Actor*>::iterator it;
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        if (!(*it)->isDead()) //live actor
+        {
+            if (distance(x, y, (*it)->getX(), (*it)->getY()) <= (SPRITE_WIDTH)) {
+                (*it)->takeDamage(damage);
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+// Is bacterium a blocked from moving to the indicated location?
+bool StudentWorld::isBacteriumMovementBlockedAt(Actor* a, double x, double y) const {
+    list<Actor*>::const_iterator it;
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        if ((*it)->blocksBacteriumMovement()) {
+            if (distance((*it)->getX(), (*it)->getY(), x, y) <= (SPRITE_WIDTH / 2)) {
+                return true;
+            }
+        }
+        it++;
+    }
+    return false;
+}
+
+
+// If actor a overlaps this world's socrates, return a pointer to the
+// socrates; otherwise, return nullptr
+Socrates* StudentWorld::getOverlappingSocrates(Actor* a) const {
+    double x = a->getX();
+    double y = a->getY();
+    double socX = m_socrates->getX();
+    double socY = m_socrates->getY();
+    if (distance(x, y, socX, socY) <= SPRITE_WIDTH) {
+        return m_socrates;
+    }
+    else
+        return nullptr;
+}
+
+// If actor a overlaps a living edible object, return a pointer to the
+   // edible object; otherwise, return nullptr
+Actor* StudentWorld::getOverlappingEdible(Actor* a) const 
+{
+    double x = a->getX();
+    double y = a->getY();
+    list<Actor*>::const_iterator it;
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        if (!(*it)->isDead() && (*it)->isEdible()) //live actor
+        {
+            if (distance(x, y, (*it)->getX(), (*it)->getY()) <= (SPRITE_WIDTH)) {
+                return *it;
+            }
+        }
+        it++;
+    }
+    return nullptr;
+}
+
+
+// Return true if this world's socrates is within the indicated distance
+    // of actor a; otherwise false.  If true, angle will be set to the
+    // direction from actor a to the socrates.
+bool StudentWorld::getAngleToNearbySocrates(Actor* a, int dist, int& angle) const {
+    double x = a->getX();
+    double y = a->getY();
+    double socX = m_socrates->getX();
+    double socY = m_socrates->getY();
+    if (distance(x, y, socX, socY) <= dist) {
+        angle = atan2((socY - y), (socX - x));
+        return true;
+    }
+    else
+        return false;
+}
+
+
+// Return true if there is a living edible object within the indicated
+    // distance from actor a; otherwise false.  If true, angle will be set
+    // to the direction from actor a to the edible object nearest to it.
+bool StudentWorld::getAngleToNearestNearbyEdible(Actor* a, int dist, int& angle) const 
+{
+    Actor* ptrClosest = nullptr;
+    bool edible = false;
+    double minDistance = 0;
+    double x = a->getX();
+    double y = a->getY();
+    list<Actor*>::const_iterator it;
+    it = m_actors.begin();
+    while (it != m_actors.end()) {
+        if (!(*it)->isDead() && (*it)->isEdible()) //live actor
+        {
+            double dis = distance(x, y, (*it)->getX(), (*it)->getY());
+            if (dis <= dist) {
+                if (ptrClosest = nullptr){
+                    ptrClosest = (*it);
+                    minDistance = dis;
+                    edible = true;
+                }
+                else {
+                    if (dis < minDistance) {
+                        minDistance = dis;
+                        ptrClosest = (*it);
+                    }
+                }
+            }
+        }
+        it++;
+    }
+    if (edible) {
+        angle = atan2((*it)->getY() - y, ((*it)->getX() - x));
+    }
+    return edible;
+
+}
+
+// Set x and y to the position on the circumference of the Petri dish
+    // at the indicated angle from the center.  (The circumference is
+    // where socrates and goodies are placed.)
+void StudentWorld::getPositionOnCircumference(int angle, double& x, double& y) const {
+    x = 120.0 * sin(angle) + 128.0;
+    y = 120.0 * cos(angle) + 128.0;
 }
 
 int StudentWorld::init()
@@ -82,7 +213,6 @@ int StudentWorld::init()
         double rad = (12.0) * sqrt(randInt(0, 100));
         addActor(new Dirt((rad * cos(deg) + 128.0), (rad * sin(deg) + 128.0), this));
     }
-    cout << "hello" << endl;
 
     //allocate and insert pit(s) into game world
     for (int i = 0; i < getLevel(); i++) {
